@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Senor-He"><meta name="copyright" content="Senor-He"><meta name="generator" content="Hexo 7.2.0"><meta name="theme" content="hexo-theme-yun"><title>Hello World | 虚拟仿真文档</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Senor-He"><meta name="copyright" content="Senor-He"><meta name="generator" content="Hexo 7.2.0"><meta name="theme" content="hexo-theme-yun"><title>Unity库/插件/工具类/扩展的集合 | 虚拟仿真文档</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
   [".post-card",".markdown-body img"].forEach((target)=> {
     ScrollReveal().reveal(target);
   })
@@ -8,15 +8,15 @@ document.addEventListener("pjax:success", initScrollReveal);
 </script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
     window.Yun = {}
     window.CONFIG = {"hostname":"example.com","root":"/","title":"内部文档","version":"1.10.11","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
-  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="前言推荐一个GitHub关于Unity库&#x2F;插件&#x2F;工具类&#x2F;扩展的集合，都是免费的，里面包含各种各样实用的工具，比如 对象池、八叉树、回放系统、粒子、寻路、Debug工具、VR、网络库、物理、AI、Input控制器等等等等，应有尽有。 链接：https:&#x2F;&#x2F;github.com&#x2F;michidk&#x2F;Unity-Script-Collection 梯子挂了，翻译的不全，有空再翻">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
+<meta property="og:title" content="Unity库&#x2F;插件&#x2F;工具类&#x2F;扩展的集合">
 <meta property="og:url" content="http://example.com/2024/06/29/hello-world/index.html">
 <meta property="og:site_name" content="虚拟仿真文档">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="前言推荐一个GitHub关于Unity库&#x2F;插件&#x2F;工具类&#x2F;扩展的集合，都是免费的，里面包含各种各样实用的工具，比如 对象池、八叉树、回放系统、粒子、寻路、Debug工具、VR、网络库、物理、AI、Input控制器等等等等，应有尽有。 链接：https:&#x2F;&#x2F;github.com&#x2F;michidk&#x2F;Unity-Script-Collection 梯子挂了，翻译的不全，有空再翻">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-29T02:51:24.438Z">
-<meta property="article:modified_time" content="2024-06-29T02:48:13.609Z">
+<meta property="article:published_time" content="2024-06-29T07:47:38.000Z">
+<meta property="article:modified_time" content="2024-06-29T09:00:12.049Z">
 <meta property="article:author" content="Senor-He">
 <meta name="twitter:card" content="summary"><script>(function() {
   if (CONFIG.mode !== 'auto') return
@@ -35,17 +35,341 @@ IconifyProviders = {
     // Wait for 1 second before switching API hosts
     rotate: 1000,
   },
-};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Senor-He"><img width="96" loading="lazy" src="/yun.png" alt="Senor-He"></a><div class="site-author-name"><a href="/about/">Senor-He</a></div><span class="site-name">虚拟仿真文档</span><sub class="site-subtitle">最好的仿真系统框架</sub><div class="site-description">非常完善的API文档</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">2</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">0</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">0</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://example.com/2024/06/29/hello-world/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Senor-He"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="虚拟仿真文档"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Hello World</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2024-06-29 10:51:24" itemprop="dateCreated datePublished" datetime="2024-06-29T10:51:24+08:00">2024-06-29</time></div><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Senor-He</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://example.com/2024/06/29/hello-world/" title="Hello World">http://example.com/2024/06/29/hello-world/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2024/06/29/HEXO%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8/" rel="prev" title="GameFramework介绍"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">GameFramework介绍</span></a></div><div class="post-nav-item"></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2024 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Senor-He</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.11</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Senor-He"><img width="96" loading="lazy" src="/yun.png" alt="Senor-He"></a><div class="site-author-name"><a href="/about/">Senor-He</a></div><span class="site-name">虚拟仿真文档</span><sub class="site-subtitle">最好的仿真系统框架</sub><div class="site-description">非常完善的API文档</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">2</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">0</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">0</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GameObjects-Transforms"><span class="toc-number">2.</span> <span class="toc-text">GameObjects &amp; Transforms</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Movement-Animation"><span class="toc-number">3.</span> <span class="toc-text">Movement &amp; Animation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Controls-Input"><span class="toc-number">4.</span> <span class="toc-text">Controls &amp; Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Character-Controller"><span class="toc-number">5.</span> <span class="toc-text">Character Controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AI-Pathfinding"><span class="toc-number">6.</span> <span class="toc-text">AI &amp; Pathfinding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Physics"><span class="toc-number">7.</span> <span class="toc-text">Physics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Particles"><span class="toc-number">8.</span> <span class="toc-text">Particles</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Meshes-Construction"><span class="toc-number">9.</span> <span class="toc-text">Meshes &amp; Construction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Materials-Shading"><span class="toc-number">10.</span> <span class="toc-text">Materials &amp; Shading</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D"><span class="toc-number">11.</span> <span class="toc-text">2D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Networking"><span class="toc-number">12.</span> <span class="toc-text">Networking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VR"><span class="toc-number">13.</span> <span class="toc-text">VR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sound-Music"><span class="toc-number">14.</span> <span class="toc-text">Sound &amp; Music</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UI"><span class="toc-number">15.</span> <span class="toc-text">UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Post-Processing-Rendering"><span class="toc-number">16.</span> <span class="toc-text">Post-Processing &amp; Rendering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mobile"><span class="toc-number">17.</span> <span class="toc-text">Mobile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Debug"><span class="toc-number">18.</span> <span class="toc-text">Debug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Editor"><span class="toc-number">19.</span> <span class="toc-text">Editor</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Tools"><span class="toc-number">19.1.</span> <span class="toc-text">Tools</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Editors"><span class="toc-number">19.2.</span> <span class="toc-text">Editors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Inspector-Extensions"><span class="toc-number">19.3.</span> <span class="toc-text">Inspector Extensions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Importer"><span class="toc-number">19.4.</span> <span class="toc-text">Importer</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Serialization-Web"><span class="toc-number">20.</span> <span class="toc-text">Serialization &amp; Web</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Social-SDKs"><span class="toc-number">21.</span> <span class="toc-text">Social SDKs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-Extensions-Helper"><span class="toc-number">22.</span> <span class="toc-text">API Extensions &amp; Helper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Design-Patterns"><span class="toc-number">23.</span> <span class="toc-text">Design Patterns</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Utilities"><span class="toc-number">24.</span> <span class="toc-text">Utilities</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other"><span class="toc-number">25.</span> <span class="toc-text">Other</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://example.com/2024/06/29/hello-world/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Senor-He"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="虚拟仿真文档"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Unity库/插件/工具类/扩展的集合</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2024-06-29 15:47:38" itemprop="dateCreated datePublished" datetime="2024-06-29T15:47:38+08:00">2024-06-29</time></div><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>推荐一个GitHub关于Unity库&#x2F;插件&#x2F;工具类&#x2F;扩展的集合，都是免费的，里面包含各种各样实用的工具，比如</p>
+<p>对象池、八叉树、回放系统、粒子、寻路、Debug工具、VR、网络库、物理、AI、Input控制器等等等等，应有尽有。</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://github.com/michidk/Unity-Script-Collection">https://github.com/michidk/Unity-Script-Collection</a></p>
+<p>梯子挂了，翻译的不全，有空再翻译</p>
+<p>我尝试做下翻译：</p>
+<h3 id="GameObjects-Transforms"><a href="#GameObjects-Transforms" class="headerlink" title="GameObjects &amp; Transforms"></a>GameObjects &amp; Transforms</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/prime31/RecyclerKit">RecyclerKit</a> - 对象池系统.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Nition/UnityOctree">UnityOctree</a> - Unity八叉树实现.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/FeNo/InGameReplay">In-Game Replay System</a> - 支持录制Transform的录制回放系统.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Real-Serious-Games/Unity-Scene-Query">Unity Scene Query</a> - 用来遍历和查询Unity场景的库，以找到特定的对象(类似网页的节点方式)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/CaptainHillman/UnityTools">UnityTools</a> - 支持运行时的Gizmos绘制库.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/HiddenMonk/Unity3DRuntimeTransformGizmo">Unity3DRuntimeTransformGizmo</a> - 支持运行时的Gizmos绘制库.</li>
+</ul>
+<h3 id="Movement-Animation"><a href="#Movement-Animation" class="headerlink" title="Movement &amp; Animation"></a>Movement &amp; Animation</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://bitbucket.org/Unity-Technologies/list-view-framework">List View Framework</a> - 创建动态的可滚动列表（Unity官方的，似乎废弃了）.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/keijiro/Reaktion">Reaktion</a> - 音频响应库，根据麦克风音量播放对应的动画.</p>
+<p><a target="_blank" rel="noopener" href="https://img-blog.csdnimg.cn/img_convert/cb75c4aad79f7605c1514d10baf77882.gif">pic_413baac5.png</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Demigiant/dotween">DOTween</a> - 知名动效缓动插件.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Banbury/UnitySpritesAndBones">UnitySpritesAndBones</a> - 骨骼工具，年代太久远，请忽略，用Unity自带的即可.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/EsotericSoftware/spine-runtimes/tree/master/spine-unity">spine-unity</a> - Spine对应的Unity库.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/sunilnayak133/ikccd">ikccd</a> - IK的，年代太久远.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/ehsan-mohammadi/Aim-IK">Aim-IK</a> - IK跟随</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/fx-lange/unity-record-and-repeat">RecordAndRepeat</a> - 通过TimeLine记录和播放自定义数据.</p>
+</li>
+</ul>
+<h3 id="Controls-Input"><a href="#Controls-Input" class="headerlink" title="Controls &amp; Input"></a>Controls &amp; Input</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/daemon3000/InputManager">InputManager</a> - 键位绑定系统，不过我更推荐InControl.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/TouchScript/TouchScript">TouchScript</a> - 多点触控库，似乎没维护了，最近修改是5年前.</li>
+</ul>
+<h3 id="Character-Controller"><a href="#Character-Controller" class="headerlink" title="Character Controller"></a>Character Controller</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cjddmut/Unity-2D-Platformer-Controller">Unity 2D Platformer Controller</a> - 2d平台游戏控制器，支持双跳、爬墙等机制.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/prime31/CharacterController2D">CharacterController2D</a> - 2d版本的CharacterController.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/IronWarrior/SuperCharacterController">SuperCharacterController</a> - 3D CharacterController.</li>
+</ul>
+<h3 id="AI-Pathfinding"><a href="#AI-Pathfinding" class="headerlink" title="AI &amp; Pathfinding"></a>AI &amp; Pathfinding</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/tutsplus/A-Star-Pathfinding-for-Platformers">A Star Pathfinding for Platformers</a> - A*寻路，针对基于网格的平台游戏.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sharpaccent/Astar-for-Unity">Astar for Unity</a> - A*寻路，支持3轴和多线程.</li>
+<li><a target="_blank" rel="noopener" href="http://arongranberg.com/astar/">A* Pathfinding Project</a> - A*寻路.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ricardojmendez/UnitySteer">UnitySteer</a> - 转向，避障和路径跟随行为.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Kink3d/SimpleTraffic">SimpleTraffic</a> - 一个简单的交通系统，使用Nav Mesh.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Habrador/Self-driving-vehicle">Self-driving-vehicle</a> - 自动驾驶交通系统.</li>
+</ul>
+<h3 id="Physics"><a href="#Physics" class="headerlink" title="Physics"></a>Physics</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/phosphoer/a283cdbeca5d2160d5eed318d0362826">Mario Galaxy Gravity for Unity</a> - 类马里奥重力组件.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/eliasts/Ocean_Community_Next_Gen">Ocean Community Next Gen</a> - 水物理&#x2F;Shader.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jknightdoeswork/gpu-physics-unity">Voxel GPU Physics</a> - GPU驱动的体素物理.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Scrawk/Interactive-Erosion">Interactive Erosion</a> - 运行时流体侵蚀.</li>
+</ul>
+<h3 id="Particles"><a href="#Particles" class="headerlink" title="Particles"></a>Particles</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KvantSpray">KvantSpray</a> - GPU驱动的粒子系统（可能不支持2017以上Unity）.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/unity3d-jp/NVIDIAHairWorksIntegration">NVIDIA Hair Works Integration</a> - Nvidia Hair Works的Unity集成库，创建真实头发.</li>
+<li><a target="_blank" rel="noopener" href="https://twitter.com/Der_Kevin/status/832545397109309440">Ember Particles</a> - 灰烬粒子.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/MangoSister/SPHFluid">SPHFluid</a> - 基于SPH的交互式三维流体仿真.</li>
+</ul>
+<h3 id="Meshes-Construction"><a href="#Meshes-Construction" class="headerlink" title="Meshes &amp; Construction"></a>Meshes &amp; Construction</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Syomus/ProceduralToolkit">ProceduralToolkit</a> - 程序化生成Mesh库.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://gist.github.com/nothke/82dccc121457541fcce32aea7744618a">Draw</a> - 使用线条生成立方体等形状.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/johannesugb/VolumetricLinesUnity">VolumetricLinesUnity</a> - 基于GPU渲染的体积线段.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/procore3d/giles">giles</a> - 3D运行时关卡编辑器.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Voxelmetric/Voxelmetric">Voxelmetric</a> - 体素库.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://bitbucket.org/alexzzzz/procedural-shapes-for-unity">Procedural Shapes for Unity</a> - 程序化生成图形(链接无效了).</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/kaiware007/IcoSphreCreator">ICO Sphere Mesh Creator</a> - 程序化球体创建.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/slipster216/VertexPaint">Vertex Painter</a> - 顶点编辑.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/SixWays/FacePaint">FacePaint</a> - 支持绘制mesh每个三角面.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.assetstore.unity3d.com/en/?&_ga=1.224491866.1155275539.1473983191#!/content/10144">Simplygon</a> - 网格优化和LOD生成（无效）.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/sirgru/MeshCombineWizard">meshcombinewizard</a> - 网格合并，可以合批次.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/MicroGSD/RoadArchitect">RoadArchitect</a> - 具有动态路口、桥梁等特点的道路系统 .</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/geniikw/drawLine">DrawLine</a> - UGUI画线工具，支持贝塞尔曲线.</p>
+<p><a target="_blank" rel="noopener" href="https://img-blog.csdnimg.cn/img_convert/c970e64e5a19b9661e5630bc88fcd506.gif">pic_47f5619d.png</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/keenanwoodall/Deform">Deform</a> - 一个用于在编辑器和Unity运行时变形网格的框架 .</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Nesh108/Unity-2.5D-Destruction">2.5D Destruction</a> - 将2D精灵分解成2.5D片段（实现爆炸）.</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Nesh108/Unity_MetaBalls_Liquids">MetaBalls Liquids</a> - 使用MetaBalls进行液体模拟.</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://img-blog.csdnimg.cn/img_convert/4b6de08785330496c60766970d78e4b3.gif">pic_a3e2bb6d.png</a></p>
+<h3 id="Materials-Shading"><a href="#Materials-Shading" class="headerlink" title="Materials &amp; Shading"></a>Materials &amp; Shading</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/eliasts/Ocean_Community_Next_Gen">Ocean Community Next Gen</a> - 水物理&#x2F;Shader.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/TarasOsiris/e0e6e6c3b8fdb0d8074b">Flow Map Shader</a> - 与精灵一起工作的流程图着色器.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ellioman/ShaderProject">ShaderProject</a> - shader收集工程.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/SkyboxPlus">Skybox Plus</a> - 一系列天空盒shader.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/michidk/3b49362e21563a1d66d52f4cf4bdc7ce">Outline Shader</a> - 轮廓着色器，它适应屏幕宽度和相机距离 .</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/traggett/UnitySpriteShaders">Unity Sprite Uber Shader</a> - 精灵的3D着色(例如法线贴图).</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/BrokenVector/LowPolyShaders">Low Poly Shaders</a> - 针对低多边形模型优化的着色器.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/larsbertram69/Lux-2.02-Personal">Lux Shader Framework</a> - Lux 2.02 pbr Shader框架.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Chaser324/unity-wireframe">Unity Wireframe Shaders</a> - 通用线框着色器.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/andydbc/HologramShader">Hologram Shader</a> - 简单的全息图着色器.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kayac/kamakura-shaders/">Kamakura Shaders</a> - 一个关于非真实感渲染的着色器和组件的集合.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Facepunch/Facepunch.Highlight">Facepunch.Highlight</a> - Mesh外发光.</li>
+</ul>
+<h3 id="2D"><a href="#2D" class="headerlink" title="2D"></a>2D</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MrJoy/UnitySVG">UnitySVG</a> - 读取svg格式.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/snozbot/fungus">Fungus</a> - 2d互动故事叙述游戏框架，流程图式的框架.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/UnityPatterns/PolyMesh">PolyMesh</a> - 2d形状创建工具，适用于原型，Unity已经内置了.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/toinfiniityandbeyond/unity-tilemap">Unity Tilemap</a> - 2D tilemap editor，Unity也内置了.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/2d-extras">2D Extras</a> - Tilemap扩展工具包，很实用.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/vector-graphics-samples">Vector Graphics Samples</a> - 在Unity 2018.1以上中使用矢量图 .</li>
+</ul>
+<h3 id="Networking"><a href="#Networking" class="headerlink" title="Networking"></a>Networking</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/atrakeur/unity-unet-authoritative-networking">UNet Authoritative Networking</a> - 权威的网络实现.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/MidLevel/MLAPI">MLAPI</a> Unity的UNET高级API的替代品，允许单独的服务器&#x2F;客户端项目和更多 .</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/alvyxaz/barebones-masterserver">Barebones Master Server</a> - 托管您自己的自定义主服务器设置，避免CCU费用 .</li>
+</ul>
+<h3 id="VR"><a href="#VR" class="headerlink" title="VR"></a>VR</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ValveSoftware/steamvr_unity_plugin">SteamVR</a> - VR SDK.</li>
+<li><a target="_blank" rel="noopener" href="https://www.assetstore.unity3d.com/en/#!/content/63141">The Lab Renderer</a> - Steam官方推出的VR渲染库.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/thestonefox/VRTK">VRTK</a> - 支持各种VR SDK的切换，只需一套代码，就能接好各个VR平台.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/TomorrowTodayLabs/NewtonVR">NewtonVR</a> - VR 物理和交互库.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NormalVR/CutieKeys/">Cutie Keys</a> - VR 虚拟键盘.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rjth/Punchkeyboard">Punchkeyboard</a> - 另一款VR虚拟键盘.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aestheticinteractive/Hover-UI-Kit">Hover UI Kit</a> - VR UI框架.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/VRLineRenderer">VRLineRenderer</a> - 为VR优化的线段.</li>
+</ul>
+<h3 id="Sound-Music"><a href="#Sound-Music" class="headerlink" title="Sound &amp; Music"></a>Sound &amp; Music</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zeh/usfxr">usfxr</a> - 程序化生成音效.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/GabeBigBoxVR/UnityDefaultMicrophone">DefaultMicrophone</a> - 获取默认麦克风名字(Windows).</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/Lasp">Lasp</a> - 将音频信号转化为图形.</li>
+</ul>
+<h3 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dandarawy/Unity3DBookPageCurl">Book Page Curl</a> - 翻书插件.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/GreatArcStudios/unitypausemenu">Open Pause Menu</a> - 暂停UI.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SpaceMadness/lunar-unity-console">Lunar Mobile Console</a> - 可视化日志输出插件.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ivomarel/InfinityScroll">InfinityScroll</a> - 无限滚动条，使UGUI的ScrollRects无限滚动.</li>
+<li><a target="_blank" rel="noopener" href="https://www.assetstore.unity3d.com/en/#!/content/17662">TextMesh Pro</a> - Unity已经内置的TextMeshPro.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/madsbangh/EasyButtons">EasyButtons</a> - Button标签，在Inspector界面显示按钮.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/UnityUIExtensions/unity-ui-extensions">UI Extensions</a> - UGUI扩展，提供各种各样的组件比如颜色选择器、UGUI线条等.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kimsama/Unity-NGUIExtension">NGUI Extensions</a> - NGUI扩展.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kimsama/unity3d-webview-csharp">Webview CSharp</a> - 将网站内置显示到Unity中.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Chman/Typogenic">Typogenic</a> - 一个易于使用，快速和高质量的3D Text组件.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pandr/unity-debug-overlay">unity-debug-overlay</a> - 运行时Debug工具，可以绘制出心跳图.</li>
+</ul>
+<h3 id="Post-Processing-Rendering"><a href="#Post-Processing-Rendering" class="headerlink" title="Post-Processing &amp; Rendering"></a>Post-Processing &amp; Rendering</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/kode80/kode80SSR">kode80SSR</a> - screen-space reflections.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoObscurance">KinoObscurance</a> - screen-space ambient obscurance.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Chman/SMAA">SMAA</a> - subpixel morphological anti-aliasing.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/playdeadgames/temporal">Temporal Reprojection Anti-Aliasing</a> - anti-aliasing solution used in INSIDE.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kode80/kode80CloudsUnity3D">kode80CloudsUnity3D</a> - realtime volumetric clouds.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kode80/PixelRenderUnity3D">PixelRenderUnity3D</a> - pixelized rendering.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/RyanNielson/PixelCamera2D">PixelCamera2D</a> - pixel-perfect rendering.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoMotion">KinoMotion</a> - motion blur using motion vectors.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoContour">KinoContour</a> - edge detection.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoMirror">KinoMirror</a> - kaleidoscope effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoFringe">KinoFringe</a> - chromatic aberration.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoBinary">KinoBinary</a> - 1-bit monochrome effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoFeedback">KinoFeedback</a> - retro framebuffer feedback effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoRamp">KinoRamp</a> - color ramp overlay.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoSlitscan">KinoSlitscan</a> - slit-scan effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoGlitch">KinoGlitch</a> - glitch effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoDatamosh">KinoDatamosh</a> - datamosh.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/staffantan/unity-vhsglitch">unity vhsglitch</a> - vhs glitch effect.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/Bitcake-Studio/bitstrap/src/e912c1e939700f42956272290d3e8c293f90c142/Assets/BitStrap/Shaders/Scanline.shader">Scanline Shader</a> - scanline effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoFog">KinoFog</a> - global fog.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoBloom">KinoBloom</a> - bloom.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoBokeh">KinoBokeh</a> - bokeh effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoVignette">KinoVignette</a> - vignette.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/KinoVision">KinoVision</a> - frame information visualizer.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/i-saint/Unity5Effects">Unity5Effects</a> - post-processing collection.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/robertcupisz/LightShafts">LightShafts</a> - light shafts.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SlightlyMad/VolumetricLights">VolumetricLights</a> - volumetric lights.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/keijiro/SonarFx">SonarFx</a> - wave patterns.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/Unity-Technologies/cinematic-image-effects">Cinematic Image Effects</a> - cinematic image effects.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/PostProcessing">Post-processing Stack</a> - multiple image effects in one pipeline.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Chman/Moments">Moments</a> - gif recorder.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hecomi/uDesktopDuplication">uDesktopDuplication</a> - realtime screen capture as Texture2D.</li>
+<li><a target="_blank" rel="noopener" href="https://twitter.com/minionsart/status/833967666780110849">Heat Distortion Effect</a> - a shader which distorts the image behind, using a normal map.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/falconmick/ClearFlagsMobile">Clear Flags Effect</a> - Image Effect to reproduce the Clear Flags camera effect.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/DeLightingTool">DeLightingTool</a> - tool to remove lighting information from textures in a photogrammetry asset pipeline.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mattatz/unity-lut-generator">unity-lut-generator</a> - LookUpTable generator for Unity.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sonicether/SEGI">SEGI</a> - Sonic Ether’s voxel-based global illumination system.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/raphael-ernaelsten/Aura">Aura</a> - a local simulation of the light scattering into the surrounding medium.</li>
+</ul>
+<h3 id="Mobile"><a href="#Mobile" class="headerlink" title="Mobile"></a>Mobile</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/TarasOsiris/dec42cf3ecca6c854182f385e38dbf57">Toast</a> - android toast notifications.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/PhannGor/b8eec5911913d7e6eac6">FBSucks</a> - android share image &amp; text.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Over17/UnityShowAndroidStatusBar">UnityShowAndroidStatusBar</a> - android show statusbar.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/googlevr/gvr-unity-sdk">Google VR SDK</a> - google mobile vr sdk.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gree/unity-webview">Unity Webview</a> - webview overlay.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/proletariatgames/CUDLR">CUDLR</a> - remote debugging and logging console.</li>
+<li><a target="_blank" rel="noopener" href="https://www.assetstore.unity3d.com/en/?&_ga=1.224491866.1155275539.1473983191#!/content/10144">Simplygon</a> - mesh optimization &amp; lod generation.</li>
+</ul>
+<h3 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/hecomi/uREPL">uREPL</a> - runtime evaluation of c# expressions.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/bbbscarter/UberLogger">UberLogger</a> - advanced logging API, improved editor console &amp; ingame console.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Sacred-Seed-Studio/Unity-File-Debug">Unity File Debug</a> - enhanced Debug.Log with file export and web viewer.</li>
+<li><a target="_blank" rel="noopener" href="https://docs.unity3d.com/Packages/com.unity.immediate-window@latest/index.html">Immediate Window</a> -- Type code and get immediate feedback with object inspection like chrome console debugger.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mminer/consolation">Consolation</a> - in-game debug console.</li>
+</ul>
+<h3 id="Editor"><a href="#Editor" class="headerlink" title="Editor"></a>Editor</h3><h4 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/BrokenVector/favorites-list">Favorites List</a> - mark objects&#x2F;scenen&#x2F;assets as favorites to return to them quickly.</li>
+<li><a target="_blank" rel="noopener" href="https://thorgeirk11.github.io/REX-Diagnostics/">REX Diagnostics</a> - runtime evaluation of c# expressions.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/TarasOsiris/Better-Defines">Better Defines</a> - platform dependent preprocessor directive manager.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/liortal53/MissingReferencesUnity">MissingReferencesUnity</a> - find missing references.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/handcircus/Unity-Resource-Checker">Unity Resource Checker</a> - resource analyzer.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/yasirkula/UnityAssetUsageDetector">Asset Usage Detector</a> - checks if an asset is used in code and&#x2F;or scene files.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DarrenTsung/compile-time-tracker">Compile Time Tracker</a> - compile time tracker.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/RaduMC/UnityStudio">UnityStudio</a> - unity asset export tool.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PhannGor/Screen-Shooter">Screen Shooter</a> - takes screenshots with multiple resolutions at once.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/rotorz/script-templates-for-unity">Script Templates for Unity</a> - script templates.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mjholtzem/Unity-2D-Destruction">Unity 2D Destruction</a> - sprite destruction.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/slipster216/CurveTexture">CurveTexture</a> - bake curves into texture.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PhannGor/unity3d-rainbow-folders">Unity3D Rainbow Folders</a> - folder icons.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zios/unity-themes">Unity Themes</a> - editor themes.</li>
+<li><a target="_blank" rel="noopener" href="https://www.assetstore.unity3d.com/en/#!/content/59228">Tree Randomizer</a> - randomize unity trees.</li>
+<li><a target="_blank" rel="noopener" href="https://www.assetstore.unity3d.com/en/#!/content/58831">Render Settings Duplicator</a> - clones the render settings from one scene to another.</li>
+<li><a target="_blank" rel="noopener" href="https://twitter.com/talecrafter/status/780812894502084609">Piviot Transform Helper</a> - adds piviot creation shortcuts to the context menu.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/Skybladev2/d0d029716b1651cc1947">ScriptExecutionOrder Attribute</a> - attribute to specify execution order.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sirgru/Unity-Simple-Editor-Shortcuts-Tools-Collection">Simple Editor Shortcuts Tools Collection</a> - small collection of simple tools to help in scene editing workflows.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/redbluegames/unity-mulligan-renamer">Mulligan Renamer</a> - bulk renaming tool for game objects and assets.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lee-io/BitField-Attribute">BitField Attribute</a> - Enable bit field masking from the Unity Editor.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lee-io/ScriptableObject-Menu">ScriptableObject Menu</a> - Create ScriptableObjects from the Unity Editor.</li>
+</ul>
+<h4 id="Editors"><a href="#Editors" class="headerlink" title="Editors"></a>Editors</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/daemon3000/Brainiac">Brainiac</a> - behaviour tree &amp; (behaviour-)node-based visual editor.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Baste-RainGames/Node_Editor">Node Editor</a> - (calculation-)node editor.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aphex-/BrotherhoodOfNode/">BrotherhoodOfNode</a> - (more graphical-)node editor for visual things.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/x0r04rg/VisualNoiseDesigner">VisualNoiseDesigner</a> - visual noise designer.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/phosphoer/8cccb00e20d9892af1438a795779bee0">SimpleGeo</a> - simple geometry painter.</li>
+<li><a target="_blank" rel="noopener" href="http://catlikecoding.com/unity/tutorials/curves-and-splines/">Curves and Splines</a> - curve &amp; spline editor.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/toxicFork/Unity-2D-Joint-Editors">Unity 2D Joint Editors</a> - 2d joint editors.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/UnityPatterns/PolyMesh">PolyMesh</a> - 2d shape editor.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/slipster216/VertexPaint">VertexPaint</a> - vertex data painter.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sabresaurus/SabreCSG">SabreCSG</a> - a set of level design tools for building complex levels.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/toinfiniityandbeyond/unity-tilemap">Unity Tilemap</a> - 2D tilemap editor.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Seneral/Node_Editor_Framework">Node Editor Framework</a> - Node Editor Framework for creating node based displays and editors.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/MephestoKhaan/UnityEventVisualizer">Unity Event Visualizer</a> - graph editor for viewing all UnityEvents.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cemuka/UnityRuntimeNodeEditor">Runtime Node editor</a> - Unity runtime node editor using with Unity UI.</li>
+</ul>
+<h4 id="Inspector-Extensions"><a href="#Inspector-Extensions" class="headerlink" title="Inspector Extensions"></a>Inspector Extensions</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/rotorz/reorderable-list-editor-field-for-unity">Reorderable Lists</a> - reorderable list field.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/rotorz/ordered-dictionary-asset-for-unity">Ordered Dictionary</a> - ordered dictionary field.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/rotorz/classtypereference-for-unity">ClassTypeReference</a> - class type reference field.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Thundernerd/Unity3D-ExtendedEvent">Unity3D ExtendedEvent</a> - extended event selector.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/anchan828/property-drawer-collection">Property Drawer Collection</a> - collection of property drawers.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nicloay/Node-Inspector">Node Inspector</a> - node based inspector.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rstecca/ColorBands">ColorBands</a> - color bands.</li>
+<li><a target="_blank" rel="noopener" href="https://www.assetstore.unity3d.com/en/#!/content/53869">QuickEvent</a> - persistent event handlers with static or dynamic values.</li>
+<li><a target="_blank" rel="noopener" href="https://twitter.com/mrpodunkian/status/715309192886624256">Reorder Components</a> - reorder components on your GameObjects.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/nicoplv/df3368eb38849a3f76a97fc27ba8ca62">AwesomeComponent</a> - auto load assets on SerializedFields.</li>
+<li><a target="_blank" rel="noopener" href="http://diegogiacomelli.com.br/unity3d-scenepreview-inspector/">ScenePreview Inspector</a> - view scene preview in inspector.</li>
+</ul>
+<h4 id="Importer"><a href="#Importer" class="headerlink" title="Importer"></a>Importer</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/tsubaki/Unity-Excel-Importer-Maker">Unity Excel Importer Maker</a> - excel.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ChemiKhazi/UnityPsdImporter">Unity Psd Importer</a> - advanced psd import.</li>
+</ul>
+<h3 id="Serialization-Web"><a href="#Serialization-Web" class="headerlink" title="Serialization &amp; Web"></a>Serialization &amp; Web</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/jacobdufault/fullserializer">Full Serializer</a> - custom serializer.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SaladLab/Json.Net.Unity3D">Json.Net</a> - Newtonsoft Json.NET.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/codecoding/SQLite4Unity3d">SQLite4Unity3d</a> - sql lite.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/andyburke/UnityHTTP">UnityHTTP</a> - http library.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kimsama/Unity-QuickSheet">Unity QuickSheet</a> - import data from google&#x2F;excel sheets.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/TeamSirenix/odin-serializer">Odin Unity Serializer</a> - Arguably the best serializer for Unity out there.</li>
+</ul>
+<h3 id="Social-SDKs"><a href="#Social-SDKs" class="headerlink" title="Social SDKs"></a>Social SDKs</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/googleanalytics/google-analytics-plugin-for-unity">Google Analytics Plugin</a> - Google Analytics.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/playgameservices/play-games-plugin-for-unity">Google Play Games Plugin</a> - Google Play plugin.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/facebook/facebook-sdk-for-unity">Facebook SDK</a> - Facebook sdk.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/reignstudios/Reign-Unity-Plugin5">Reign Unity Plugin</a> - unified mobile api.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/getsocial-im/getsocial-unity-sdk">GetSocial SDK</a> - community api.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/soomla/unity3d-store">SOOMLA Framework</a> - store api.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rlabrecque/Steamworks.NET">Steamworks.NET</a> - c# wrapper for valve’s Steamworks API.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Facepunch/Facepunch.Steamworks">Facepunch.Steamworks</a> - Steamworks C# API (not all features implemented, but better API).</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/toofu37/twitter-for-unity">twitter-for-unity</a> - Twitter API Client for Unity.</li>
+</ul>
+<h3 id="API-Extensions-Helper"><a href="#API-Extensions-Helper" class="headerlink" title="API Extensions &amp; Helper"></a>API Extensions &amp; Helper</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/TarasOsiris/a8904989c18424bcdf73">Camera Extension</a> - a better way of manipulating the culling mask.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/asus4/2490117">Download Manager</a> - simple file downloads.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PimDeWitte/UnityMainThreadDispatcher">UnityMainThreadDispatcher</a> - main thread dispatcher.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ProtoTurtle/UnityBitmapDrawing">UnityBitmapDrawing</a> - texture2d drawing extensions.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Thundernerd/Unity3D-ComponentAttribute">Unity3D ComponentAttribute</a> - auto component referencing.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Thundernerd/Unity3D-ExecutionOrderAttribute">Unity3D ExecutionOrderAttribute</a> - execution order attribute.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/neuecc/LINQ-to-GameObject-for-Unity">LINQ to GameObject for Unity</a> - gameobject linq querys.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/snippets/Lordinarius/8rnLn/chainedworks">Chained Works</a> - coroutine chained procedures.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/alvivar/TeaTime">TeaTime</a> - timer queue for coroutines.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nicoplv/smart-tags-and-layers">Smart Tags and Layers</a> - generates static values for your tags and layers.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DarrenTsung/DTValidator">DTValidator</a> - finds broken and unassigned references.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Siccity/xNode">xNode</a> - easily create node-based plugins.</li>
+</ul>
+<h3 id="Design-Patterns"><a href="#Design-Patterns" class="headerlink" title="Design Patterns"></a>Design Patterns</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/kleber-swf/Unity-Singleton-MonoBehaviour">Unity Singleton MonoBehaviour</a> - powerful singleton.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/UnityPatterns/Signals">Signals</a> - simple event&#x2F;signal system.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/thefuntastic/Unity3d-Finite-State-Machine">Unity3d Finite State Machine</a> - simple finite stata machine.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/StompyRobot/stateless">stateless</a> - more complex state machines.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/marwie/Design-Patterns-in-Unity-Example">Design Patterns in Unity Example</a> - collection of design patterns.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sschmid/Entitas-CSharp">Entitas CSharp</a> - entity component system framework.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/strangeioc/strangeioc">strangeioc</a> - inversion of control framework.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/modesttree/Zenject">Zenject</a> - depedency injection framework.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/neuecc/UniRx">UniRx</a> - unity reactive extensions implementation.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/StompyRobot/stateless">Stateless</a> - Fork of Stateless dot net statemachine for .Net 3.5.</li>
+</ul>
+<h3 id="Utilities"><a href="#Utilities" class="headerlink" title="Utilities"></a>Utilities</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Demigiant/demilib">demilib</a> - various utilities and tools for Unity.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SirHall/Excessives">Excessives</a> - General purpose C# and Unity3D utility scripts.</li>
+</ul>
+<h3 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/adamtuliper/48a6e2ce3d9b5e72be36">Unity Right Click</a> - windows context menu extension: ‘open with unity’.</li>
+<li><a target="_blank" rel="noopener" href="https://capeguy.co.uk/2015/06/no-more-unity-hot-reload/">No Hot-Reload</a> - prevent unity hot-reloads.</li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/alexzzzz/unity-c-5.0-and-6.0-integration">Unity C# 5.0 and 6.0 Integration</a> - c# 5 &amp; 6 integration for unity.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/canab/flunity">FLUnity</a> - flash to unity.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/modesttree/projeny">Projeny</a> - project management.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/proletariatgames/CUDLR">CUDLR</a> - remote debugging and logging console.</li>
+<li><a target="_blank" rel="noopener" href="http://designagame.eu/2016/09/is-unity-webgl-loading-a-simple-fix/">WebGL - Simple Loading Fix</a> - custom loading bar for the webgl loader.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/prime31/UtilityKit">UtilityKit</a> - SerializationUtil, SpriteAnimator, SpriteAnimator, MathHeloers, AutoSnap, …</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/jbevain/a982cc580fb796c93e4e">Remove Boo.Lang and UnityScript Hints</a> - Project Generation Hook to remove references to Boo.Lang and UnityScript assemblies.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/thinksquirrel/asset-store-batch-mode">Asset Store Batch Mode</a> - API for uploading Unity Asset Store packages.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aschearer/unitysizeexplorer">Unity Size Explorer</a> - analyzes the disk space usage of your build.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/BrokenVector/BetterUnityScriptTemplates">Better Unity Script Templates</a> - improved Script templates.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/UnityCsReference">UnityCsReference</a> - Unity C# reference source code.</li>
+<li><a target="_blank" rel="noopener" href="https://oc.unity3d.com/index.php/s/dfc9aa1491ff905f589408aa136eab23">Shader Calibration Charts</a> - Unity StandardShader calibration charts.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/BayatGames/SaveGameFree">Save Game Free</a> - cross platform, encrypted, online-stored saves.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SoapCode/UCompile">UCompile</a> - runtime compilation and execution of CSharp code.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/KonH/UDBase">UDBase</a> - module-based game template for Unity.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Scrawk/Hull-Delaunay-Voronoi">Hull-Delaunay-Voronoi</a> - Hull, Delaunay and Voronoi algorithms in Unity.</li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/rubenhorn/e8de0fb635c3936d47cd15dfbaafc3d4">YTranslate</a> - machine translation using Yandex Translate.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Rozhovetskyi/AR-Support-Checker">AR Support Checker</a> - plain detection of AR supported (ARCore, ARKit, AR Foundation) devices.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jasielmacedo/steam-microtransaction-api/">Steam Microtransaction API Handler</a> - API for Steam In-Game Purchase with examples using Unity</li>
+</ul>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Senor-He</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://example.com/2024/06/29/hello-world/" title="Unity库/插件/工具类/扩展的集合">http://example.com/2024/06/29/hello-world/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2024/06/29/HEXO%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8/" rel="prev" title="GameFramework介绍"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">GameFramework介绍</span></a></div><div class="post-nav-item"></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2024 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Senor-He</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.11</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>

@@ -16,7 +16,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 <meta property="og:description" content="Unity ECS 核心数据概念详解RefRW&lt;T&gt; 与 RefRO&lt;T&gt;：安全的数据访问引用RefRW&lt;T&gt; 和 RefRO&lt;T&gt; 是 Unity ECS 1.0+ 中用于在 SystemAPI 查询和组件获取时，安全访问组件数据的特殊结构体。它们的核心作用是明确数据访问意图（读写或只读）并自动处理作业系统 (Job System) 的依赖关系。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-05T03:36:33.141Z">
-<meta property="article:modified_time" content="2025-06-05T03:48:25.336Z">
+<meta property="article:modified_time" content="2025-06-05T06:47:31.271Z">
 <meta property="article:author" content="Senor-He">
 <meta name="twitter:card" content="summary"><script>(function() {
   if (CONFIG.mode !== 'auto') return
@@ -35,7 +35,7 @@ IconifyProviders = {
     // Wait for 1 second before switching API hosts
     rotate: 1000,
   },
-};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Senor-He"><img width="96" loading="lazy" src="/yun.png" alt="Senor-He"></a><div class="site-author-name"><a href="/about/">Senor-He</a></div><span class="site-name">虚拟仿真文档</span><sub class="site-subtitle">最好的仿真系统框架</sub><div class="site-description">非常完善的API文档</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">0</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">0</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity-ECS-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Unity ECS 核心数据概念详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RefRW-%E4%B8%8E-RefRO%EF%BC%9A%E5%AE%89%E5%85%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E5%BC%95%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">RefRW&lt;T&gt; 与 RefRO&lt;T&gt;：安全的数据访问引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RefRW-ReadWrite-Reference"><span class="toc-number">1.1.1.</span> <span class="toc-text">RefRW&lt;T&gt; (ReadWrite Reference)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RefRO-ReadOnly-Reference"><span class="toc-number">1.1.2.</span> <span class="toc-text">RefRO&lt;T&gt; (ReadOnly Reference)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DynamicBuffer%EF%BC%9A%E5%8A%A8%E6%80%81%E5%85%83%E7%B4%A0%E9%9B%86%E5%90%88"><span class="toc-number">1.2.</span> <span class="toc-text">DynamicBuffer&lt;T&gt;：动态元素集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.</span> <span class="toc-text">ECS 中的其他重要数据类型&#x2F;概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Entity"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. Entity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-IComponentData"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. IComponentData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IBufferElementData"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. IBufferElementData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-IAspect"><span class="toc-number">1.3.4.</span> <span class="toc-text">4. IAspect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-ISharedComponentData-%E5%85%B1%E4%BA%AB%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.5.</span> <span class="toc-text">5. ISharedComponentData (共享组件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-IEnableableComponent-%E5%8F%AF%E5%90%AF%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.6.</span> <span class="toc-text">6. IEnableableComponent (可启用组件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Chunk-%E7%BB%84%E4%BB%B6-IComponentData-on-Chunks"><span class="toc-number">1.3.7.</span> <span class="toc-text">7. Chunk 组件 (IComponentData on Chunks)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-Singleton-Components-%E5%8D%95%E4%BE%8B%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.8.</span> <span class="toc-text">8. Singleton Components (单例组件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-EntityQuery"><span class="toc-number">1.3.9.</span> <span class="toc-text">9. EntityQuery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-ArchetypeChunk"><span class="toc-number">1.3.10.</span> <span class="toc-text">10. ArchetypeChunk</span></a></li></ol></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://example.com/2025/06/05/Unity_ECS1.3.1/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Senor-He"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="虚拟仿真文档"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">核心数据概念详解</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2025-06-05 11:36:33" itemprop="dateCreated datePublished" datetime="2025-06-05T11:36:33+08:00">2025-06-05</time></div><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h1 id="Unity-ECS-核心数据概念详解"><a href="#Unity-ECS-核心数据概念详解" class="headerlink" title="Unity ECS 核心数据概念详解"></a>Unity ECS 核心数据概念详解</h1><h2 id="RefRW-与-RefRO：安全的数据访问引用"><a href="#RefRW-与-RefRO：安全的数据访问引用" class="headerlink" title="RefRW&lt;T&gt; 与 RefRO&lt;T&gt;：安全的数据访问引用"></a><code>RefRW&lt;T&gt;</code> 与 <code>RefRO&lt;T&gt;</code>：安全的数据访问引用</h2><p><code>RefRW&lt;T&gt;</code> 和 <code>RefRO&lt;T&gt;</code> 是 Unity ECS 1.0+ 中用于在 <code>SystemAPI</code> 查询和组件获取时，安全访问组件数据的特殊结构体。它们的核心作用是<strong>明确数据访问意图（读写或只读）</strong>并<strong>自动处理作业系统 (Job System) 的依赖关系</strong>。</p>
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Senor-He"><img width="96" loading="lazy" src="/yun.png" alt="Senor-He"></a><div class="site-author-name"><a href="/about/">Senor-He</a></div><span class="site-name">虚拟仿真文档</span><sub class="site-subtitle">最好的仿真系统框架</sub><div class="site-description">非常完善的API文档</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">0</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">0</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity-ECS-%E6%A0%B8%E5%BF%83%E6%95%B0%E6%8D%AE%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Unity ECS 核心数据概念详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RefRW-%E4%B8%8E-RefRO%EF%BC%9A%E5%AE%89%E5%85%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E5%BC%95%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">RefRW&lt;T&gt; 与 RefRO&lt;T&gt;：安全的数据访问引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RefRW-ReadWrite-Reference"><span class="toc-number">1.1.1.</span> <span class="toc-text">RefRW&lt;T&gt; (ReadWrite Reference)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RefRO-ReadOnly-Reference"><span class="toc-number">1.1.2.</span> <span class="toc-text">RefRO&lt;T&gt; (ReadOnly Reference)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DynamicBuffer%EF%BC%9A%E5%8A%A8%E6%80%81%E5%85%83%E7%B4%A0%E9%9B%86%E5%90%88"><span class="toc-number">1.2.</span> <span class="toc-text">DynamicBuffer&lt;T&gt;：动态元素集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.</span> <span class="toc-text">ECS 中的其他重要数据类型&#x2F;概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Entity"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. Entity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-IComponentData"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. IComponentData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IBufferElementData"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. IBufferElementData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-IAspect"><span class="toc-number">1.3.4.</span> <span class="toc-text">4. IAspect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-ISharedComponentData-%E5%85%B1%E4%BA%AB%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.5.</span> <span class="toc-text">5. ISharedComponentData (共享组件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-IEnableableComponent-%E5%8F%AF%E5%90%AF%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.6.</span> <span class="toc-text">6. IEnableableComponent (可启用组件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Chunk-%E7%BB%84%E4%BB%B6-IComponentData-on-Chunks"><span class="toc-number">1.3.7.</span> <span class="toc-text">7. Chunk 组件 (IComponentData on Chunks)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-Singleton-Components-%E5%8D%95%E4%BE%8B%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.8.</span> <span class="toc-text">8. Singleton Components (单例组件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-EntityQuery"><span class="toc-number">1.3.9.</span> <span class="toc-text">9. EntityQuery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-ArchetypeChunk"><span class="toc-number">1.3.10.</span> <span class="toc-text">10. ArchetypeChunk</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity-NativeArray-%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">Unity: NativeArray&lt;T&gt; 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%9C%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">核心特性与作用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity-%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8%E4%B8%8E-Job-System-%E5%9C%A8%E9%9D%9E-ECS-%E6%9E%B6%E6%9E%84%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">Unity 数据容器与 Job System 在非 ECS 架构中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8%E5%AF%B9%E6%AF%94-DynamicBuffer-NativeArray-NativeList"><span class="toc-number">3.1.</span> <span class="toc-text">数据容器对比: DynamicBuffer&lt;T&gt;, NativeArray&lt;T&gt;, NativeList&lt;T&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NativeArray-%E5%9B%9E%E9%A1%BE"><span class="toc-number">3.1.1.</span> <span class="toc-text">NativeArray&lt;T&gt; (回顾)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NativeList"><span class="toc-number">3.1.2.</span> <span class="toc-text">NativeList&lt;T&gt;</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity-ECS-SystemBase-%E4%B8%8E-World-%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.</span> <span class="toc-text">Unity ECS: SystemBase 与 World 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SystemBase"><span class="toc-number">4.1.</span> <span class="toc-text">SystemBase</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#World"><span class="toc-number">4.2.</span> <span class="toc-text">World</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://example.com/2025/06/05/Unity_ECS1.3.1/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Senor-He"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="虚拟仿真文档"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">核心数据概念详解</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2025-06-05 11:36:33" itemprop="dateCreated datePublished" datetime="2025-06-05T11:36:33+08:00">2025-06-05</time></div><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h1 id="Unity-ECS-核心数据概念详解"><a href="#Unity-ECS-核心数据概念详解" class="headerlink" title="Unity ECS 核心数据概念详解"></a>Unity ECS 核心数据概念详解</h1><h2 id="RefRW-与-RefRO：安全的数据访问引用"><a href="#RefRW-与-RefRO：安全的数据访问引用" class="headerlink" title="RefRW&lt;T&gt; 与 RefRO&lt;T&gt;：安全的数据访问引用"></a><code>RefRW&lt;T&gt;</code> 与 <code>RefRO&lt;T&gt;</code>：安全的数据访问引用</h2><p><code>RefRW&lt;T&gt;</code> 和 <code>RefRO&lt;T&gt;</code> 是 Unity ECS 1.0+ 中用于在 <code>SystemAPI</code> 查询和组件获取时，安全访问组件数据的特殊结构体。它们的核心作用是<strong>明确数据访问意图（读写或只读）</strong>并<strong>自动处理作业系统 (Job System) 的依赖关系</strong>。</p>
 <h3 id="RefRW-ReadWrite-Reference"><a href="#RefRW-ReadWrite-Reference" class="headerlink" title="RefRW&lt;T&gt; (ReadWrite Reference)"></a><code>RefRW&lt;T&gt;</code> (ReadWrite Reference)</h3><ul>
 <li><p><strong>作用</strong>：提供对组件数据 <code>T</code> 的<strong>读写</strong>引用。</p>
 </li>
@@ -171,4 +171,406 @@ IconifyProviders = {
 <li>一个 Chunk 包含相同原型 (Archetype，即组件类型组合相同) 的实体。</li>
 <li>在 <code>IJobChunk</code> 作业中直接操作。</li>
 </ul>
+<h1 id="Unity-NativeArray-详解"><a href="#Unity-NativeArray-详解" class="headerlink" title="Unity: NativeArray&lt;T&gt; 详解"></a>Unity: <code>NativeArray&lt;T&gt;</code> 详解</h1><p><code>NativeArray&lt;T&gt;</code> 是 Unity C# Job System 和 Burst Compiler 技术栈中的一个核心数据结构。它是一个<strong>非托管内存数组</strong>，提供了对一段连续内存块的类型安全访问，并且设计用于在多线程作业 (Jobs) 之间安全高效地共享数据。</p>
+<h2 id="核心特性与作用"><a href="#核心特性与作用" class="headerlink" title="核心特性与作用"></a>核心特性与作用</h2><ol>
+<li><p><strong>非托管内存 (Unmanaged Memory)</strong>:</p>
+<ul>
+<li><code>NativeArray&lt;T&gt;</code> 的数据存储在 C# 托管堆之外的<strong>原生内存 (Native Memory)</strong> 中。</li>
+<li><strong>优点</strong>:<ul>
+<li><strong>避免垃圾回收 (GC) 开销</strong>: 由于数据不在托管堆上，创建、销毁和访问 <code>NativeArray</code> 不会触发 GC，这对于追求高性能和流畅帧率的应用至关重要。</li>
+<li><strong>与原生代码互操作</strong>: 可以轻松地将 <code>NativeArray</code> 的指针传递给 C&#x2F;C++ 等原生代码库。</li>
+<li><strong>Burst Compiler 友好</strong>: Burst Compiler 可以直接操作原生内存，生成高度优化的机器码。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>类型安全 (Type Safety)</strong>:</p>
+<ul>
+<li>尽管是原生内存，<code>NativeArray&lt;T&gt;</code> 仍然是类型安全的。<code>T</code> 必须是一个**非托管类型 (Unmanaged Type)**，这意味着：<ul>
+<li><code>T</code> 必须是 <code>struct</code> (值类型)。</li>
+<li><code>T</code> 不能包含任何引用类型 (如 <code>string</code>, <code>class</code> 对象) 或指向托管对象的指针。它可以包含其他非托管结构体或基本类型 (int, float, bool, Entity, float3 等)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>固定大小 (Fixed Size)</strong>:</p>
+<ul>
+<li><code>NativeArray&lt;T&gt;</code> 在创建时需要指定大小，并且其大小在生命周期内不能改变。如果需要动态大小的集合，应考虑使用 <code>NativeList&lt;T&gt;</code> (类似于 <code>List&lt;T&gt;</code>) 或 ECS 中的 <code>DynamicBuffer&lt;T&gt;</code>。</li>
+</ul>
+</li>
+<li><p><strong>与 Job System 紧密集成</strong>:</p>
+<ul>
+<li><code>NativeArray&lt;T&gt;</code> 是 Job System 中传递和操作数据的主要方式之一。</li>
+<li><strong>作业数据共享</strong>: 作业可以安全地读取或写入传递给它们的 <code>NativeArray</code>。</li>
+<li><strong>安全性</strong>: Job System 会通过**安全系统 (Safety System)**（在编辑器和开发构建中默认开启）来跟踪 <code>NativeArray</code> 的使用情况，防止常见的并发问题：<ul>
+<li><strong>竞态条件 (Race Conditions)</strong>: 例如，一个作业正在写入 <code>NativeArray</code>，而另一个作业同时在读取或写入它，没有适当的同步。</li>
+<li><strong>悬垂指针&#x2F;越界访问</strong>: 访问已释放的 <code>NativeArray</code> 或超出其边界的索引。</li>
+<li><strong>别名问题</strong>: 安全系统有助于检测不安全的内存别名。</li>
+</ul>
+</li>
+<li><strong>只读标记</strong>: 可以通过 <code>[ReadOnly]</code> 属性或 <code>AsReadOnly()</code> 方法将 <code>NativeArray</code> 标记为只读传递给作业，这允许 Job System 进行更积极的并行调度。</li>
+</ul>
+</li>
+<li><p><strong>显式的内存管理 (Explicit Memory Management)</strong>:</p>
+<ul>
+<li><code>NativeArray&lt;T&gt;</code> 需要<strong>手动分配和释放内存</strong>。</li>
+<li><strong>分配</strong>: 使用构造函数 <code>new NativeArray&lt;T&gt;(int length, Allocator allocatorLabel, NativeArrayOptions options = NativeArrayOptions.ClearMemory)</code>。<ul>
+<li><code>length</code>: 数组的元素数量。</li>
+<li><code>allocatorLabel</code>: 指定内存分配的类型和生命周期，常见的有：<ul>
+<li><code>Allocator.Temp</code>: 最短生命周期，通常用于单帧内的临时数据，必须在同一帧内释放。分配速度快。</li>
+<li><code>Allocator.TempJob</code>: 生命周期比 <code>Temp</code> 稍长，可以跨越几帧（通常是 4 帧），专为短期作业设计。</li>
+<li><code>Allocator.Persistent</code>: 长生命周期，可以持续整个应用程序的运行时间，直到手动释放。分配和释放较慢。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>释放</strong>: 必须调用 <code>Dispose()</code> 方法来释放原生内存。<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NativeArray&lt;<span class="built_in">int</span>&gt; myArray = <span class="keyword">new</span> NativeArray&lt;<span class="built_in">int</span>&gt;(<span class="number">10</span>, Allocator.TempJob);</span><br><span class="line"><span class="comment">// ... 使用 myArray ...</span></span><br><span class="line">myArray.Dispose(); <span class="comment">// 必须调用！</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>未释放的内存会导致内存泄漏！</strong> Unity 的安全系统会在编辑器中警告未释放的 <code>NativeArray</code>。</li>
+</ul>
+</li>
+<li><p><strong>Blittable 类型</strong>:</p>
+<ul>
+<li>由于 <code>T</code> 必须是非托管类型，<code>NativeArray&lt;T&gt;</code> 中的数据通常是 “blittable” 的，这意味着它们在托管内存和原生内存中的表示是相同的，可以直接进行内存拷贝，非常高效。</li>
+</ul>
+</li>
+</ol>
+<h1 id="Unity-数据容器与-Job-System-在非-ECS-架构中的应用"><a href="#Unity-数据容器与-Job-System-在非-ECS-架构中的应用" class="headerlink" title="Unity 数据容器与 Job System 在非 ECS 架构中的应用"></a>Unity 数据容器与 Job System 在非 ECS 架构中的应用</h1><h2 id="数据容器对比-DynamicBuffer-NativeArray-NativeList"><a href="#数据容器对比-DynamicBuffer-NativeArray-NativeList" class="headerlink" title="数据容器对比: DynamicBuffer&lt;T&gt;, NativeArray&lt;T&gt;, NativeList&lt;T&gt;"></a>数据容器对比: <code>DynamicBuffer&lt;T&gt;</code>, <code>NativeArray&lt;T&gt;</code>, <code>NativeList&lt;T&gt;</code></h2><p>这三者都是 Unity DOTS 技术栈中处理数据的核心容器，但它们各有特点和适用场景。</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left"><code>NativeArray&lt;T&gt;</code></th>
+<th align="left"><code>NativeList&lt;T&gt;</code></th>
+<th align="left"><code>DynamicBuffer&lt;T&gt;</code> (ECS 特有)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>内存类型</strong></td>
+<td align="left">非托管 (Native)</td>
+<td align="left">非托管 (Native)</td>
+<td align="left">非托管 (Native, 由 ECS 管理)</td>
+</tr>
+<tr>
+<td align="left"><strong>大小</strong></td>
+<td align="left">固定大小 (创建时指定)</td>
+<td align="left">动态大小 (可运行时添加&#x2F;删除元素)</td>
+<td align="left">动态大小 (可运行时添加&#x2F;删除元素)</td>
+</tr>
+<tr>
+<td align="left"><strong>GC 影响</strong></td>
+<td align="left">无</td>
+<td align="left">无 (但频繁调整大小可能有性能开销)</td>
+<td align="left">无 (由 ECS 高效管理)</td>
+</tr>
+<tr>
+<td align="left"><strong>创建&#x2F;销毁</strong></td>
+<td align="left">手动 <code>new NativeArray/Dispose()</code></td>
+<td align="left">手动 <code>new NativeList/Dispose()</code></td>
+<td align="left">ECS 自动管理 (附加到实体上)</td>
+</tr>
+<tr>
+<td align="left"><strong>主要用途</strong></td>
+<td align="left">存储固定大小的、需要在 Jobs 中处理的数据集合</td>
+<td align="left">存储动态大小的、需要在 Jobs 中处理的数据集合</td>
+<td align="left">作为 ECS 实体的组件，表示一个动态的元素列表</td>
+</tr>
+<tr>
+<td align="left"><strong>Job System 兼容</strong></td>
+<td align="left">极佳，核心数据结构</td>
+<td align="left">良好，可传递给 Jobs (通常在 Job 完成后 List 结构固定)</td>
+<td align="left">良好 (通过 <code>GetBuffer()</code> 获取，其内部可视为 NativeArray 类似数据)</td>
+</tr>
+<tr>
+<td align="left"><strong>API 示例</strong></td>
+<td align="left"><code>Length</code>, <code>this[index]</code> (读写), <code>GetSubArray()</code></td>
+<td align="left"><code>Add()</code>, <code>RemoveAt()</code>, <code>Clear()</code>, <code>Length</code>, <code>Capacity</code>, <code>this[index]</code>, <code>AsArray()</code></td>
+<td align="left"><code>Add()</code>, <code>RemoveAt()</code>, <code>Clear()</code>, <code>Length</code>, <code>this[index]</code>, <code>AsNativeArray()</code></td>
+</tr>
+<tr>
+<td align="left"><strong>Allocator</strong></td>
+<td align="left"><code>Allocator.Temp</code>, <code>TempJob</code>, <code>Persistent</code></td>
+<td align="left"><code>Allocator.Temp</code>, <code>TempJob</code>, <code>Persistent</code></td>
+<td align="left">由 ECS 内部管理</td>
+</tr>
+<tr>
+<td align="left"><strong>适用场景</strong></td>
+<td align="left">性能敏感的、大小已知或可预测的数据处理，作业的输入输出</td>
+<td align="left">需要在主线程构建动态列表，然后传递给作业处理或在作业中构建（较少见）</td>
+<td align="left">ECS 实体需要存储可变数量的同类型数据元素 (如路径点、Buff)</td>
+</tr>
+<tr>
+<td align="left"><strong>与 ECS 关系</strong></td>
+<td align="left">独立于 ECS，但 ECS 内部广泛使用</td>
+<td align="left">独立于 ECS</td>
+<td align="left">ECS 的核心组件类型之一 (<code>IBufferElementData</code>)</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="NativeArray-回顾"><a href="#NativeArray-回顾" class="headerlink" title="NativeArray&lt;T&gt; (回顾)"></a><code>NativeArray&lt;T&gt;</code> (回顾)</h3><ul>
+<li><strong>核心</strong>：固定大小的非托管数组。</li>
+<li><strong>优点</strong>：性能高，GC-free，与 Job System 和 Burst 结合紧密。</li>
+<li><strong>缺点</strong>：大小固定，需要手动管理内存。</li>
+<li><strong>用途</strong>：作业的主要输入输出，当数据量已知或可预测时非常高效。</li>
+</ul>
+<hr>
+<h3 id="NativeList"><a href="#NativeList" class="headerlink" title="NativeList&lt;T&gt;"></a><code>NativeList&lt;T&gt;</code></h3><ul>
+<li><strong>核心</strong>：动态大小的非托管列表，类似于托管的 <code>List&lt;T&gt;</code>，但使用原生内存。</li>
+<li><strong>优点</strong>：GC-free，可以动态添加和删除元素。</li>
+<li><strong>缺点</strong>：<ul>
+<li>需要手动管理内存 (<code>Dispose()</code>)。</li>
+<li>频繁地动态调整大小（特别是添加超出当前容量的元素）可能会导致内存重新分配和拷贝，带来性能开销。</li>
+<li>在 Job 中直接修改 <code>NativeList</code> 的结构（添加&#x2F;删除元素）通常是不安全的或不推荐的，因为这会使长度和容量信息在多线程环境下变得不可靠。通常的做法是：<ol>
+<li>在主线程填充 <code>NativeList</code>。</li>
+<li>将其（或其 <code>AsArray()</code> 视图）传递给 Job 进行只读处理，或者让 Job 将结果写入另一个 <code>NativeArray</code> 或 <code>NativeList</code> (并行 Job 通常写入 <code>NativeArray</code> 的特定索引，或使用 <code>NativeQueue.ParallelWriter</code> 等并发容器)。</li>
+<li>如果 Job 需要动态输出，可以考虑 <code>NativeQueue</code> 或 <code>NativeStream</code>。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>API 亮点</strong>:<ul>
+<li><code>Capacity</code>: 当前分配的内部数组大小。</li>
+<li><code>Length</code>: 实际存储的元素数量。</li>
+<li><code>Add(T item)</code>: 添加元素，如果 <code>Length == Capacity</code>，会触发扩容。</li>
+<li><code>AddRange(NativeArray&lt;T&gt; array)</code>: 高效添加 <code>NativeArray</code> 的内容。</li>
+<li><code>AsArray()</code>: 返回一个 <code>NativeArray&lt;T&gt;</code> 视图，指向 <code>NativeList</code> 内部的已填充数据部分 (从索引 0 到 <code>Length-1</code>)。<strong>这个视图共享内存，但其长度是固定的。</strong></li>
+</ul>
+</li>
+<li><strong>用途</strong>：当需要在主线程构建一个大小不确定的列表，然后传递给 Job 进行处理，或者 Job 的输出大小不确定但可以在 Job 完成后一次性收集时。</li>
+</ul>
+<h1 id="Unity-ECS-SystemBase-与-World-详解"><a href="#Unity-ECS-SystemBase-与-World-详解" class="headerlink" title="Unity ECS: SystemBase 与 World 详解"></a>Unity ECS: <code>SystemBase</code> 与 <code>World</code> 详解</h1><p>在 Unity ECS (Entity Component System) 中，<code>SystemBase</code> 和 <code>World</code> 是两个核心概念，它们共同构成了 ECS 架构的基础。</p>
+<h2 id="SystemBase"><a href="#SystemBase" class="headerlink" title="SystemBase"></a><code>SystemBase</code></h2><p><code>SystemBase</code> 是一个抽象基类，用于创建在主线程上运行的 ECS 系统。虽然 ECS 1.0+ 版本更推荐使用 <code>ISystem</code> 接口 (通常是 <code>partial struct</code> 实现) 以获得更好的 Burst 编译支持和更轻量级的结构，但 <code>SystemBase</code> 仍然在某些场景下有用，或者在一些较早的 ECS 项目中会遇到。</p>
+<p><strong>作用</strong>:</p>
+<ul>
+<li>提供一个面向对象的基类来封装系统的逻辑。</li>
+<li>允许系统持有托管数据和状态 (相比之下，<code>ISystem</code> (struct) 通常不直接持有复杂的托管状态)。</li>
+<li>提供了方便的属性和方法来与 <code>EntityManager</code>、<code>World</code> 和时间等进行交互。</li>
+<li>支持传统的 C# 事件和委托。</li>
+</ul>
+<p><strong>生命周期方法 (主要重写的方法)</strong>:</p>
+<ol>
+<li><p><strong><code>OnCreate()</code></strong>:</p>
+<ul>
+<li>在系统第一次被创建并添加到 <code>World</code> 时调用一次。</li>
+<li>适合进行一次性的初始化操作，例如：<ul>
+<li>获取和缓存其他系统的引用。</li>
+<li>创建和缓存 <code>EntityQuery</code> 对象 (用于后续查询实体)。</li>
+<li>订阅事件。</li>
+<li>检查必要的单例组件是否存在 (<code>RequireSingletonForUpdate&lt;T&gt;()</code>)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>OnStartRunning()</code></strong>:</p>
+<ul>
+<li>当系统从禁用状态变为启用状态，或者在 <code>OnCreate()</code> 之后首次准备运行时调用。</li>
+<li>当系统之前因为 <code>RequireSingletonForUpdate&lt;T&gt;()</code> 缺失单例而未运行时，一旦单例出现，此方法会被调用。</li>
+<li>适合进行那些依赖于其他系统或数据已经准备就绪的设置。</li>
+</ul>
+</li>
+<li><p><strong><code>OnUpdate()</code></strong>:</p>
+<ul>
+<li>每帧调用一次（如果系统是启用的并且其更新条件满足）。</li>
+<li>这是系统执行其核心逻辑的地方，例如：<ul>
+<li>查询实体。</li>
+<li>读取和修改组件数据。</li>
+<li>创建或销毁实体。</li>
+<li>与其他系统交互。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>OnStopRunning()</code></strong>:</p>
+<ul>
+<li>当系统从启用状态变为禁用状态时调用，或者在 <code>OnDestroy()</code> 之前。</li>
+<li>当系统因为 <code>RequireSingletonForUpdate&lt;T&gt;()</code> 所需的单例消失而停止运行时，此方法会被调用。</li>
+<li>适合进行清理那些在 <code>OnStartRunning()</code> 中设置的资源或状态。</li>
+</ul>
+</li>
+<li><p><strong><code>OnDestroy()</code></strong>:</p>
+<ul>
+<li>当系统从 <code>World</code> 中被移除或 <code>World</code> 被销毁时调用一次。</li>
+<li>适合进行最终的清理工作，例如：<ul>
+<li>释放非托管资源。</li>
+<li>取消事件订阅。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>常用属性和方法</strong>:</p>
+<ul>
+<li><p><strong><code>EntityManager</code> (属性)</strong>:</p>
+<ul>
+<li>获取当前 <code>World</code> 的 <code>EntityManager</code> 实例。</li>
+<li>用于执行所有与实体和组件相关的底层操作（创建&#x2F;销毁实体，添加&#x2F;移除组件，设置&#x2F;获取组件数据等）。</li>
+<li><strong>示例</strong>: <code>EntityManager.CreateEntity()</code>, <code>EntityManager.AddComponentData(entity, new Position &#123; Value = float3.zero &#125;)</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>World</code> (属性)</strong>:</p>
+<ul>
+<li>获取当前系统所属的 <code>World</code> 对象。</li>
+</ul>
+</li>
+<li><p><strong><code>Time</code> (属性)</strong>:</p>
+<ul>
+<li>获取一个 <code>TimeData</code> 结构体，包含 <code>DeltaTime</code>、<code>ElapsedTime</code> 等时间信息，与 <code>SystemAPI.Time</code> 类似。</li>
+</ul>
+</li>
+<li><p><strong><code>Enabled</code> (属性)</strong>:</p>
+<ul>
+<li>获取或设置系统是否启用。禁用的系统不会执行 <code>OnUpdate()</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>Entities</code> (属性，用于 <code>ForEach</code> 查询)</strong>:</p>
+<ul>
+<li>提供一个流畅的 API (<code>Entities.ForEach</code>) 来迭代符合特定条件的实体和组件。这是 <code>SystemBase</code> 中一个非常核心的查询方式。</li>
+<li><strong>示例</strong>:<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Entities</span><br><span class="line">    .WithName(<span class="string">&quot;MyMovementQuery&quot;</span>) <span class="comment">// 可选，用于 Profiler 中显示</span></span><br><span class="line">    .WithAll&lt;Position, Velocity&gt;()</span><br><span class="line">    .WithNone&lt;Frozen&gt;()</span><br><span class="line">    .ForEach((Entity entity, <span class="keyword">ref</span> Position pos, <span class="keyword">in</span> Velocity vel) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        pos.Value += vel.Value * Time.DeltaTime;</span><br><span class="line">    &#125;)</span><br><span class="line">    .ScheduleParallel(); <span class="comment">// 在 Job System 中并行执行 (或者 .Run() 在主线程执行)</span></span><br></pre></td></tr></table></figure></li>
+<li><code>Entities.ForEach</code> 可以与 <code>.Schedule()</code> (单线程 Job), <code>.ScheduleParallel()</code> (多线程 Job), 或 <code>.Run()</code> (主线程立即执行) 结合使用。</li>
+<li>它会自动处理依赖关系。</li>
+</ul>
+</li>
+<li><p><strong><code>GetEntityQuery(params ComponentType[] componentTypes)</code> &#x2F; <code>GetEntityQuery(EntityQueryDesc queryDesc)</code></strong>:</p>
+<ul>
+<li>创建或获取一个 <code>EntityQuery</code> 对象。<code>EntityQuery</code> 是更底层的查询机制，可以用于获取组件数据的 <code>NativeArray</code>，或用于 <code>IJobChunk</code>。</li>
+<li>通常在 <code>OnCreate()</code> 中创建并缓存。</li>
+</ul>
+</li>
+<li><p><strong><code>RequireForUpdate&lt;T&gt;()</code> &#x2F; <code>RequireSingletonForUpdate&lt;T&gt;()</code></strong>:</p>
+<ul>
+<li>在 <code>OnCreate()</code> 中调用，用于声明系统运行的先决条件。</li>
+<li><code>RequireForUpdate&lt;T&gt;()</code>: 要求存在至少一个实体拥有组件 <code>T</code> 或存在 <code>T</code> 类型的 <code>EntityQuery</code> (如果 <code>T</code> 是 <code>EntityQueryOptions</code> 或 <code>ComponentType</code>)，系统才会运行。</li>
+<li><code>RequireSingletonForUpdate&lt;T&gt;()</code>: 要求存在类型为 <code>T</code> 的单例组件，系统才会运行。如果单例不存在，系统将不会执行 <code>OnUpdate()</code>，直到单例出现。</li>
+</ul>
+</li>
+<li><p><strong><code>GetSingleton&lt;T&gt;()</code> &#x2F; <code>SetSingleton&lt;T&gt;(T value)</code></strong>:</p>
+<ul>
+<li>获取或设置单例组件的值。</li>
+</ul>
+</li>
+<li><p><strong><code>HasSingleton&lt;T&gt;()</code></strong>:</p>
+<ul>
+<li>检查是否存在类型为 <code>T</code> 的单例组件。</li>
+</ul>
+</li>
+<li><p><strong><code>Dependency</code> (属性)</strong>:</p>
+<ul>
+<li>用于管理 Job System 的依赖关系。<code>Entities.ForEach(...).Schedule()</code> 或 <code>ScheduleParallel()</code> 会返回一个 <code>JobHandle</code>，通常应该赋值给 <code>Dependency</code>，以确保 Job 正确完成并与其他系统的 Job 同步。</li>
+<li><code>this.Dependency = jobHandle;</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>与 <code>ISystem</code> 的对比</strong>:</p>
+<ul>
+<li><code>ISystem</code> 是 <code>struct</code>，更轻量，更适合 Burst，是现代 ECS 的首选。</li>
+<li><code>SystemBase</code> 是 <code>class</code>，允许托管状态，更像传统的 Unity 脚本，但可能不完全 Burst 兼容，且有对象分配开销。</li>
+<li><code>ISystem</code> 使用 <code>SystemAPI</code> 进行交互，而 <code>SystemBase</code> 有自己的成员属性和方法。</li>
+</ul>
+<hr>
+<h2 id="World"><a href="#World" class="headerlink" title="World"></a><code>World</code></h2><p><code>World</code> 是 ECS 中最顶层的容器对象。一个 Unity 应用程序可以有多个 <code>World</code> 实例。</p>
+<p><strong>作用</strong>:</p>
+<ul>
+<li><strong>包含实体、组件和系统</strong>: 每个 <code>World</code> 都有其自己独立的 <code>EntityManager</code> (管理实体和组件) 和一组系统 (处理逻辑)。</li>
+<li><strong>隔离数据和逻辑</strong>: 不同的 <code>World</code> 之间的数据和系统是隔离的。这对于实现不同的模拟状态（如客户端世界、服务器世界）、编辑器工具世界或特定功能（如烘焙世界）非常有用。</li>
+<li><strong>管理系统的生命周期和更新循环</strong>: <code>World</code> 负责创建、初始化、更新和销毁其内部的系统。它有一个默认的系统更新循环。</li>
+<li><strong>时间管理</strong>: 每个 <code>World</code> 可以有自己独立的时间流 (<code>World.Time</code>)。</li>
+</ul>
+<p><strong>常用属性和功能</strong>:</p>
+<ol>
+<li><p><strong><code>EntityManager</code> (属性)</strong>:</p>
+<ul>
+<li>获取该 <code>World</code> 实例的 <code>EntityManager</code>。这是与实体和组件交互的主要入口。</li>
+</ul>
+</li>
+<li><p><strong><code>Systems</code> (属性)</strong>:</p>
+<ul>
+<li>一个只读列表，包含此 <code>World</code> 中的所有系统 (<code>ComponentSystemBase</code> 类型的列表)。</li>
+</ul>
+</li>
+<li><p><strong><code>Time</code> (属性)</strong>:</p>
+<ul>
+<li>获取该 <code>World</code> 的 <code>TimeData</code>，包含 <code>DeltaTime</code>, <code>ElapsedTime</code> 等。</li>
+</ul>
+</li>
+<li><p><strong><code>Name</code> (属性)</strong>:</p>
+<ul>
+<li>获取或设置 <code>World</code> 的名称，方便调试和识别。</li>
+</ul>
+</li>
+<li><p><strong><code>Flags</code> (属性)</strong>:</p>
+<ul>
+<li>获取或设置 <code>WorldFlags</code>。这些标志可以被 <code>[WorldSystemFilter]</code> 用来决定系统是否应该在这个世界中创建。</li>
+<li><strong>示例</strong>: <code>world.Flags = WorldFlags.Game;</code> 或 <code>world.Flags |= WorldFlags.Baking;</code></li>
+</ul>
+</li>
+<li><p><strong><code>DefaultGameObjectInjectionWorld</code> (静态属性)</strong>:</p>
+<ul>
+<li>获取或设置默认的、用于 GameObject 注入 (Hybrid ECS 场景) 的世界。通常是主游戏世界。</li>
+</ul>
+</li>
+<li><p><strong><code>All</code> (静态属性)</strong>:</p>
+<ul>
+<li>一个只读列表，包含当前应用程序中存在的所有 <code>World</code> 实例。</li>
+</ul>
+</li>
+<li><p><strong>构造函数 <code>new World(string name, WorldFlags flags = WorldFlags.None)</code></strong>:</p>
+<ul>
+<li>创建一个新的 <code>World</code> 实例。</li>
+</ul>
+</li>
+<li><p><strong><code>Dispose()</code></strong>:</p>
+<ul>
+<li>销毁 <code>World</code> 及其所有系统和实体。必须手动调用以释放资源。</li>
+</ul>
+</li>
+<li><p><strong><code>GetOrCreateSystem&lt;T&gt;()</code> &#x2F; <code>GetOrCreateSystem(Type type)</code></strong>:</p>
+<ul>
+<li>获取 <code>World</code> 中已存在的 <code>T</code> 类型系统，如果不存在则创建并添加一个新的实例。</li>
+<li><strong>示例</strong>: <code>var mySystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem&lt;MyMovementSystem&gt;();</code></li>
+</ul>
+</li>
+<li><p><strong><code>DestroySystem(ComponentSystemBase system)</code> &#x2F; <code>DestroySystem&lt;T&gt;()</code></strong>:</p>
+<ul>
+<li>从 <code>World</code> 中移除并销毁指定的系统。</li>
+</ul>
+</li>
+<li><p><strong><code>GetExistingSystem&lt;T&gt;()</code> &#x2F; <code>GetExistingSystem(Type type)</code></strong>:</p>
+<ul>
+<li>获取 <code>World</code> 中已存在的 <code>T</code> 类型系统，如果不存在则返回 <code>null</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>Update()</code></strong>:</p>
+<ul>
+<li>手动触发该 <code>World</code> 中所有可更新系统的更新循环。通常由 Unity 的播放循环自动调用默认世界的 <code>Update()</code>。对于自定义世界，你可能需要手动调用。</li>
+</ul>
+</li>
+<li><p><strong><code>GetExistingSystemManaged&lt;T&gt;()</code> &#x2F; <code>GetOrCreateSystemManaged&lt;T&gt;()</code></strong>:</p>
+<ul>
+<li>针对托管系统（继承自 <code>ComponentSystemBase</code> 而非 <code>SystemBase</code> 的较旧系统，或是一些特殊的 Unity 系统）的类似方法。</li>
+</ul>
+</li>
+</ol>
+<p><strong>如何获取 <code>World</code></strong>:</p>
+<ul>
+<li><strong>在 <code>SystemBase</code> 或 <code>ISystem</code> (通过 <code>SystemState</code>) 中</strong>:<ul>
+<li><code>SystemBase</code>: <code>this.World</code></li>
+<li><code>ISystem</code>: <code>ref SystemState state</code> 参数，<code>state.World</code></li>
+<li><code>SystemAPI</code>: <code>SystemAPI.World</code> (获取当前上下文的 World)</li>
+</ul>
+</li>
+<li><strong>通过静态属性</strong>: <code>World.DefaultGameObjectInjectionWorld</code></li>
+<li><strong>通过 <code>World.All</code> 列表</strong>: 遍历并根据名称或标志查找。</li>
+</ul>
+<p><strong>使用多个 <code>World</code> 的场景</strong>:</p>
+<ul>
+<li><strong>客户端&#x2F;服务器</strong>: 在同一进程中模拟客户端和服务器，各自拥有独立的 <code>World</code>。</li>
+<li><strong>编辑器工具</strong>: 创建一个临时的 <code>World</code> 来处理编辑器下的数据转换或预览。</li>
+<li><strong>内容烘焙</strong>: 如前所述，烘焙过程通常在专门的烘焙 <code>World</code> 中进行。</li>
+<li><strong>模拟不同状态</strong>: 例如，一个用于“实时游戏”，另一个用于“回放”或“计划模式”。</li>
+</ul>
+<p><strong>总结</strong>:</p>
+<ul>
+<li><code>SystemBase</code> 提供了一个传统的面向对象方式来构建主线程系统，并提供了方便的 API (尤其是 <code>Entities.ForEach</code>) 来与 ECS 数据交互。尽管 <code>ISystem</code> 更受推崇，但 <code>SystemBase</code> 仍有其用武之地。</li>
+<li><code>World</code> 是 ECS 的核心容器，管理着独立的实体、组件和系统集合。它使得数据和逻辑的隔离成为可能，并驱动着系统的生命周期和更新。</li>
+</ul>
+<p>理解 <code>SystemBase</code>（或其现代替代品 <code>ISystem</code>）如何在其所属的 <code>World</code> 上下文中运作，是掌握 Unity ECS 的关键。</p>
 </div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Senor-He</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://example.com/2025/06/05/Unity_ECS1.3.1/" title="核心数据概念详解">http://example.com/2025/06/05/Unity_ECS1.3.1/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2025/06/05/Unity_ECS%E4%B8%ADSystem_API/" rel="prev" title="SystemAPI讲解"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">SystemAPI讲解</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2024/06/29/GameFramework%E4%BB%8B%E7%BB%8D/" rel="next" title="GameFramework介绍"><span class="post-nav-text">GameFramework介绍</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2025 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Senor-He</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.11</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>

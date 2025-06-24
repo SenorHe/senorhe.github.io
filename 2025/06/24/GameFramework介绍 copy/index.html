@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Senor-He"><meta name="copyright" content="Senor-He"><meta name="generator" content="Hexo 7.2.0"><meta name="theme" content="hexo-theme-yun"><title>ProcedureSimulationRunTime流程介绍 | 虚拟仿真文档</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"example.com","root":"/","title":"内部文档","version":"1.10.11","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="[播放器流程] 仿真运行流程：从数据接收到3D还原 (ProcedureSimulationRunTime)本文档总结了基于提供的 C# 脚本，在 Unity 中使用 GameFramework (GF) 的 ProcedureSimulationRunTime 流程如何接收仿真数据，并将其在 3D 场景中进行创建和动态还原的过程。 一、核心流程概述仿真播放器在进入 ProcedureSimula">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ProcedureSimulationRunTime流程介绍">
+<meta property="og:url" content="http://example.com/2025/06/24/GameFramework%E4%BB%8B%E7%BB%8D%20copy/index.html">
+<meta property="og:site_name" content="虚拟仿真文档">
+<meta property="og:description" content="[播放器流程] 仿真运行流程：从数据接收到3D还原 (ProcedureSimulationRunTime)本文档总结了基于提供的 C# 脚本，在 Unity 中使用 GameFramework (GF) 的 ProcedureSimulationRunTime 流程如何接收仿真数据，并将其在 3D 场景中进行创建和动态还原的过程。 一、核心流程概述仿真播放器在进入 ProcedureSimula">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-24T07:47:38.000Z">
+<meta property="article:modified_time" content="2025-06-24T08:06:48.019Z">
+<meta property="article:author" content="Senor-He">
+<meta name="twitter:card" content="summary"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Senor-He"><img width="96" loading="lazy" src="/yun.png" alt="Senor-He"></a><div class="site-author-name"><a href="/about/">Senor-He</a></div><span class="site-name">虚拟仿真文档</span><sub class="site-subtitle">最好的仿真系统框架</sub><div class="site-description">非常完善的API文档</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">6</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">0</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">0</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%BF%E7%9C%9F%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B%EF%BC%9A%E4%BB%8E%E6%95%B0%E6%8D%AE%E6%8E%A5%E6%94%B6%E5%88%B03D%E8%BF%98%E5%8E%9F-ProcedureSimulationRunTime"><span class="toc-number">1.</span> <span class="toc-text">仿真运行流程：从数据接收到3D还原 (ProcedureSimulationRunTime)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">一、核心流程概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%8E%E7%BB%84%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">二、关键数据流与组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%813D%E8%BF%98%E5%8E%9F%E8%BF%87%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">三、3D还原过程总结</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://example.com/2025/06/24/GameFramework%E4%BB%8B%E7%BB%8D%20copy/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Senor-He"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="虚拟仿真文档"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">ProcedureSimulationRunTime流程介绍</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2025-06-24 15:47:38" itemprop="dateCreated datePublished" datetime="2025-06-24T15:47:38+08:00">2025-06-24</time></div><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>[播放器流程]</p>
+<h1 id="仿真运行流程：从数据接收到3D还原-ProcedureSimulationRunTime"><a href="#仿真运行流程：从数据接收到3D还原-ProcedureSimulationRunTime" class="headerlink" title="仿真运行流程：从数据接收到3D还原 (ProcedureSimulationRunTime)"></a>仿真运行流程：从数据接收到3D还原 (ProcedureSimulationRunTime)</h1><p>本文档总结了基于提供的 C# 脚本，在 Unity 中使用 GameFramework (GF) 的 <code>ProcedureSimulationRunTime</code> 流程如何接收仿真数据，并将其在 3D 场景中进行创建和动态还原的过程。</p>
+<h2 id="一、核心流程概述"><a href="#一、核心流程概述" class="headerlink" title="一、核心流程概述"></a>一、核心流程概述</h2><p>仿真播放器在进入 <code>ProcedureSimulationRunTime</code> 流程后，主要执行以下步骤来实现 3D 场景的构建和仿真过程的动态展示：</p>
+<ol>
+<li><p><strong>初始化阶段 (<code>OnEnter</code>)</strong>:</p>
+<ul>
+<li>注册数据变化监听器 (<code>NLDataManager.Instance.Save.DaoSimulationRunTime.AddDataChangedListener(DoRefresh)</code>).</li>
+<li>注册核心模块：数据转换器 (<code>dataConverter</code>) 和事件处理器 (<code>eventProcessor</code>)。</li>
+<li><strong>首次实体初始化 (<code>InitializeEntities</code>)</strong>: 加载场景中预定义或静态的 3D 实体模型。这些通常是场景背景、固定设施等。使用 <code>NLGameFramework.Entity.ShowSyc...Entity</code> 异步加载。</li>
+<li>如果处于本地模式 (<code>LocalMode</code>)，立即触发 <code>DoRefresh</code> 以加载和处理仿真数据。</li>
+</ul>
+</li>
+<li><p><strong>数据接收与处理 (<code>DoRefresh</code> -&gt; <code>DoInitData</code>)</strong>:</p>
+<ul>
+<li>当监听到仿真数据变化 (例如，从服务器接收到新的仿真JSON串 <code>RuntimeSimualtionJson</code>) 或在本地模式下首次进入时，此方法被调用。</li>
+<li><strong>核心数据转换 (<code>dataConverter.LoadAndConvertData</code> 或 <code>NoSerializeFieldStrConvertData</code>)</strong>:<ul>
+<li>从指定来源 (本地文件 “simulationProcess2” 或 <code>NLDataManager</code> 中的 JSON 字符串) 加载原始仿真数据。</li>
+<li>将其转换为内部定义的 <code>DataConvert.SimulationRunTimeData</code> 结构体 (<code>simulationData</code>)。此结构体包含了仿真总览信息 (起止时间、错误信息)、初始智能体数据 (<code>agent_data</code>) 以及核心的离散时间步长数据 (<code>time_steps</code>)。</li>
+</ul>
+</li>
+<li>数据校验：检查 <code>simulationData.time_steps</code> 是否有效，若无效则提示错误。</li>
+<li><strong>重置仿真状态 (<code>DoResetRuntimerSimulation</code>)</strong>: 初始化播放器内部状态，如当前时间、步长索引、播放速度、暂停状态等。</li>
+</ul>
+</li>
+<li><p><strong>动态智能体创建 (<code>DoRefresh</code> -&gt; <code>DoGenrateServerAgent</code>)</strong>:</p>
+<ul>
+<li>在 <code>simulationData</code> 加载完毕后，遍历 <code>simulationData.agent_data</code> 列表。</li>
+<li>对于列表中的每个 <code>ServerAgent</code> 数据：<ul>
+<li>使用 <code>GenerateEntityFactory.Instance.ServerAgentDataConvertSimulationData</code> 将服务器原始的智能体数据转换为客户端实体所需的 <code>SimulationEntityData</code>。</li>
+<li>根据转换后的 <code>agentData.entityData.ID</code> (如 70001-AGV, 70002-叉车, 70003-货物)，调用对应的 <code>NLGameFramework.Entity.ShowSyc...Entity</code> 方法异步在 3D 场景中创建这些动态智能体。</li>
+<li>创建前会检查实体是否已存在，避免重复创建。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>仿真运行与更新 (<code>OnUpdate</code>)</strong>:</p>
+<ul>
+<li>此方法每帧调用，驱动整个仿真过程的推进。</li>
+<li><strong>条件检查</strong>: 如果处于暂停状态 (<code>isPaused</code>) 或 <code>simulationData</code> 无效，则不执行更新。</li>
+<li><strong>时间推进</strong>: 根据 <code>elapseSeconds</code> (逻辑帧间隔) 和 <code>simulationSpeed</code> (播放速率) 更新累计时间 (<code>accumulatedTime</code>) 和总仿真时间 (<code>totalSimulationTime</code>)。</li>
+<li><strong>核心步长处理 (<code>AdvanceSimulationSteps</code>)</strong>:<ul>
+<li>循环检查当前累计时间是否已达到或超过下一个时间步 (<code>nextStepTime</code>)。</li>
+<li><strong>处理当前步长 (<code>ProcessCurrentStep</code>)</strong>:<ul>
+<li>获取当前 <code>currentStepIndex</code> 对应的 <code>DataConvert.TimeStep</code> 数据。</li>
+<li><strong>事件处理</strong>: 遍历 <code>currentStep.events</code>，将每个 <code>EventData</code> 交给 <code>eventProcessor.ProcessEvent()</code> 处理。</li>
+<li><strong>展示数据处理</strong>: 遍历 <code>currentStep.shows</code>，将 <code>showsData</code> 交给 <code>eventProcessor.processShowData()</code> 处理。这些数据通常包含实体ID、目标位置、旋转、动作等信息。</li>
+<li><code>eventProcessor</code> (如 <code>DefaultEventProcessor</code>) 内部会将这些指令通过 GameFramework 的事件系统 (如 <code>NLUtil.Instance.DispatchCustomEvent</code> 发送 <code>DEFAULT_EVENT_PROCESS_MOVE_DATA</code> 等事件) 派发给对应的 3D 实体。</li>
+</ul>
+</li>
+<li>更新到下一个步长：增加 <code>currentStepIndex</code>，从 <code>accumulatedTime</code> 中减去已处理的时间，更新 <code>simulationTime</code>，并调用 <code>CalculateNextStepTime</code> 计算下一个事件触发时间点。</li>
+</ul>
+</li>
+<li><strong>结束判断 (<code>IsSimulationFinished</code>)</strong>: 检查是否所有时间步都已处理完毕且总仿真时间已达到预设的结束时间。</li>
+<li><strong>仿真结束处理 (<code>FinalizeSimulation</code>)</strong>: 若仿真结束，设置暂停状态，派发UI结束事件。</li>
+</ul>
+</li>
+<li><p><strong>实体层面的3D还原 (各 Entity 脚本，如 <code>AGVEntity</code>, <code>ForkliftEntity</code>)</strong>:</p>
+<ul>
+<li>各种智能体实体 (如 <code>AGVEntity</code>, <code>ForkliftEntity</code>) 在其 <code>OnInit</code> 方法中会通过 <code>this.AddCustomEventListener(...)</code> 订阅由 <code>ProcedureSimulationRunTime</code> (通过 <code>eventProcessor</code>) 发出的特定事件 (如 <code>DEFAULT_EVENT_PROCESS_MOVE_DATA</code>, <code>DEFUALT_EVEMT_PROCESS_RAITON_DATA</code>)。</li>
+<li>当这些事件被触发时，实体的 <code>OnHandlerMessage</code> 方法会被调用。</li>
+<li>在 <code>OnHandlerMessage</code> 中，实体会解析事件参数 (如目标ID、起始&#x2F;结束位置、朝向、持续时间)。</li>
+<li>如果事件的目标ID与实体自身的 <code>SimulationID</code> 匹配，则实体会将其内部状态机 (FSM) 切换到相应的状态 (如 <code>AGVStateMove</code>, <code>ForkliftStateRotation</code>)，并将解析出的数据 (如 <code>AgvStatusData</code>, <code>RationStatusData</code>) 传递给该状态。</li>
+<li>FSM 的具体状态类 (如 <code>AGVStateMove</code>) 负责执行实际的 3D 变换，如使用 <code>Vector3.Lerp</code> 或其他动画机制在给定时间内移动&#x2F;旋转实体到目标状态，从而在3D场景中还原出仿真数据所描述的行为。</li>
+<li>对于货物 (<code>CargoEntity</code>)，它还处理了附着 (Attach) 到叉车或货架，以及分离 (Detach) 的逻辑，根据父实体和传入数据调整自身在3D世界中的位置和父子关系。</li>
+</ul>
+</li>
+<li><p><strong>流程结束 (<code>OnLeave</code>)</strong>:</p>
+<ul>
+<li>清理资源，重置状态，隐藏所有加载的实体，反注册监听器。</li>
+</ul>
+</li>
+</ol>
+<h2 id="二、关键数据流与组件"><a href="#二、关键数据流与组件" class="headerlink" title="二、关键数据流与组件"></a>二、关键数据流与组件</h2><ul>
+<li><strong>原始数据源</strong>:<ul>
+<li>本地 JSON 文件 (<code>simulationProcess2.json</code>)</li>
+<li>服务器通过 <code>NLDataManager.Instance.Save.DaoSimulationRunTime.RuntimeSimualtionJson</code> 提供的 JSON 字符串。</li>
+</ul>
+</li>
+<li><strong>数据转换器 (<code>ISimulationDataConverter</code> -&gt; <code>DefaultSimulationDataConverter</code>)</strong>:<ul>
+<li>负责将 JSON 字符串解析&#x2F;反序列化为结构化的 <code>DataConvert.SimulationRunTimeData</code> 对象。</li>
+</ul>
+</li>
+<li><strong>核心数据结构 (<code>DataConvert.SimulationRunTimeData</code>)</strong>:<ul>
+<li><code>agent_data</code>: <code>List&lt;ServerAgent&gt;</code>，定义了仿真开始时需要动态创建的智能体及其初始状态（ID, 类型, 初始位置, 初始旋转）。</li>
+<li><code>time_steps</code>: <code>List&lt;TimeStep&gt;</code>，按时间排序的事件序列。<ul>
+<li><code>TimeStep</code>: 包含一个时间点 (<code>time</code>) 和在该时间点发生的 <code>events</code> (<code>List&lt;EventData&gt;</code>) 及 <code>shows</code> (<code>List&lt;ShowData&gt;</code>)。</li>
+<li><code>EventData</code>&#x2F;<code>ShowData</code>: 包含了具体操作的指令，如哪个实体 (<code>agent_id</code>&#x2F;<code>object_id</code>) 执行什么动作 (<code>event_type</code>&#x2F;<code>type</code>)，以及动作参数 (如 <code>start_pos</code>, <code>end_pos</code>, <code>duration</code>, <code>start_direction</code>, <code>end_direction</code>)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>事件处理器 (<code>IEventProcessor</code> -&gt; <code>DefaultEventProcessor</code>)</strong>:<ul>
+<li>接收 <code>EventData</code> 和 <code>ShowData</code>。</li>
+<li>解析这些数据，并将其转换为 GameFramework 的自定义事件。</li>
+<li>通过 <code>NLUtil.Instance.DispatchCustomEvent</code> 或 <code>NLGameFramework.Event.Fire</code> 派发这些事件。<ul>
+<li>例如: <code>DEFAULT_EVENT_PROCESS_MOVE_DATA</code> (移动事件), <code>DEFUALT_EVEMT_PROCESS_RAITON_DATA</code> (旋转事件)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>实体创建与管理 (<code>NLGameFramework.Entity</code> &#x2F; <code>EntityExtension.cs</code>)</strong>:<ul>
+<li>提供异步方法 (<code>ShowSyc...Entity</code>) 来加载和显示3D实体。</li>
+<li>通过 <code>EntityComponent.ShowEntity</code> 实现。</li>
+<li><code>EntityExtension</code> 中的异步加载逻辑通过 <code>TaskCompletionSource</code> 和监听GF的 <code>ShowEntitySuccessEventArgs</code> &#x2F; <code>ShowEntityFailureEventArgs</code> 实现，并控制全局加载界面的显示&#x2F;隐藏。</li>
+</ul>
+</li>
+<li><strong>3D实体逻辑 (如 <code>AGVEntity</code>, <code>ForkliftEntity</code>, <code>CargoEntity</code>, <code>AgentEntity</code>)</strong>:<ul>
+<li>继承自 <code>EntityBase</code> (最终继承自 GF 的 <code>EntityLogic</code>)。</li>
+<li>每个实体拥有自己的 <code>SimulationID</code>。</li>
+<li>内部包含状态机 (FSM) 来管理其行为 (如 Idle, Move, Rotation)。</li>
+<li>监听来自事件处理器的事件，并根据事件数据驱动FSM状态转换和3D模型的实际变换 (位置、旋转、附着等)。</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、3D还原过程总结"><a href="#三、3D还原过程总结" class="headerlink" title="三、3D还原过程总结"></a>三、3D还原过程总结</h2><ol>
+<li><strong>静态场景构建</strong>: <code>InitializeEntities</code> 加载固定场景元素。</li>
+<li><strong>动态场景初始化</strong>:<ul>
+<li><code>DoInitData</code> 加载仿真总数据 <code>simulationData</code>。</li>
+<li><code>DoGenrateServerAgent</code> 根据 <code>simulationData.agent_data</code> 创建 AGV、叉车、货物等动态 3D 智能体，并设置其初始位置和旋转。</li>
+</ul>
+</li>
+<li><strong>动态行为还原</strong>:<ul>
+<li><code>OnUpdate</code> 按时间步读取 <code>simulationData.time_steps</code> 中的 <code>events</code> 和 <code>shows</code>。</li>
+<li><code>eventProcessor</code> 将这些数据包转换为针对特定实体的指令事件。</li>
+<li>目标实体接收到指令事件后，其内部 FSM 驱动 3D 模型执行相应的移动、旋转、抓取、释放等动作，从而在视觉上还原出仿真过程。</li>
+</ul>
+</li>
+</ol>
+<p>通过这套机制，<code>ProcedureSimulationRunTime</code> 成功地将抽象的仿真数据流转换为生动的 3D 可视化场景和动态过程。</p>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>Senor-He</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://example.com/2025/06/24/GameFramework%E4%BB%8B%E7%BB%8D%20copy/" title="ProcedureSimulationRunTime流程介绍">http://example.com/2025/06/24/GameFramework%E4%BB%8B%E7%BB%8D%20copy/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2025/06/05/Unity_ECS%E4%B8%ADSystem_API/" rel="next" title="SystemAPI讲解"><span class="post-nav-text">SystemAPI讲解</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2025 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Senor-He</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.11</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>
